@@ -102,6 +102,57 @@
         <div class="toggle" onclick="toggleForm()">Don't have an account? Register</div>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAK0TSvdZaQdB-jPoYXJ8pExnTpZgZFbyc",
+            authDomain: "knect-dbbc3.firebaseapp.com",
+            projectId: "knect-dbbc3",
+            storageBucket: "knect-dbbc3.appspot.com",
+            messagingSenderId: "7924433933",
+            appId: "1:7924433933:web:62c743bb0e51fdadb20144"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        function registerUser() {
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Registration Successful!");
+                    console.log("User Registered:", userCredential.user);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                    console.error(error);
+                });
+        }
+
+        function signInUser() {
+            const email = document.getElementById("sign-in-email").value;
+            const password = document.getElementById("sign-in-password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Login Successful!");
+                    console.log("User signed in:", userCredential.user);
+                })
+                .catch((error) => {
+                    alert(error.message);
+                    console.error(error);
+                });
+
+        }
+
+        window.registerUser = registerUser;
+        window.signInUser = signInUser;
+    </script>
+
     <script>
         function toggleForm() {
             const container = document.getElementById('form-container');
